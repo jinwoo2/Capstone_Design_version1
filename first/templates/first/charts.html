@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>출입명부 키오스크</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="../../static/first/assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../static/first/assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../../static/first/assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="../../static/first/assets/vendor/chartist/css/chartist-custom.css">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="../../static/first/assets/css/main.css">
+	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+	<link rel="stylesheet" href="../../static/first/assets/css/demo.css">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="apple-touch-icon" sizes="76x76" href="../../static/first/assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="../../static/first/assets/img/favicon.jpg">
+</head>
+
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="brand">
+				<a href="index.html"><img src="../../static/first/assets/img/logo-dark.jpg" alt="Klorofil Logo" class="img-responsive logo"></a>
+			</div>
+			<div class="container-fluid">
+				<div class="navbar-btn">
+					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+				</div>
+
+
+				<div id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+								<i class="lnr lnr-alarm"></i>
+								<span class="badge bg-danger">5</span>
+							</a>
+							<ul class="dropdown-menu notifications">
+								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
+								<li><a href="#" class="more">See all notifications</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Basic Use</a></li>
+								<li><a href="#">Working With Data</a></li>
+								<li><a href="#">Security</a></li>
+								<li><a href="#">Troubleshooting</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="../../static/first/assets/img/user.jpg" class="img-circle" alt="Avatar"> <span>Kim Jung Bin</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+							</ul>
+						</li>
+						<!-- <li>
+							<a class="update-pro" href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- END NAVBAR -->
+		<!-- LEFT SIDEBAR -->
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav">
+						<li><a href="{% url 'myinfo' %}" class=""><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="{% url 'charts' %}" class="active"><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li>
+						<li><a href="{% url 'page_profile' %}" class=""><i class="lnr lnr-file-empty"></i> <span>Profile</span></a></li>
+						<li><a href="{% url 'login' %}" class=""><i class="lnr lnr-file-empty"></i> <span>Login</span></a></li>
+						<li><a href="{% url 'tables' %}" class=""><i class="lnr lnr-dice"></i> <span>Tables</span></a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<h3 class="page-title">Charts</h3>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Confirmed Chart by Date</h3>
+								</div>
+								<div class="panel-body">
+									<div id="demo-line-chart" class="ct-chart"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Entered Chart by Date</h3>
+								</div>
+								<div class="panel-body">
+									<div id="demo-area-chart" class="ct-chart"></div>
+								</div>
+							</div>
+						</div>
+{#						<div class="col-md-6">#}
+{#							<div class="panel">#}
+{#								<div class="panel-heading">#}
+{#									<h3 class="panel-title">Multiple Chart</h3>#}
+{#								</div>#}
+{#								<div class="panel-body">#}
+{#									<div id="multiple-chart" class="ct-chart"></div>#}
+{#								</div>#}
+{#							</div>#}
+{#						</div>#}
+					</div>
+                    <div class="row">
+                        <div class="col-md-6">
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Place Visits</h3>
+								</div>
+								<div class="panel-body">
+									<div id="demo-bar-chart" class="ct-chart"></div>
+								</div>
+							</div>
+						</div>
+                        <div class="col-md-6">
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Place Confirmed</h3>
+								</div>
+								<div class="panel-body">
+									<div id="bar-chart" class="ct-chart"></div>
+								</div>
+							</div>
+						</div>
+                    </div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+		<!-- END MAIN -->
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright"> <i class="fa fa-love"></i><a href="https://bootstrapthemes.co"> </a>
+</p>
+			</div>
+		</footer>
+	</div>
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="../../static/first/assets/vendor/jquery/jquery.min.js"></script>
+	<script src="../../static/first/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../static/first/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../../static/first/assets/vendor/chartist/js/chartist.min.js"></script>
+	<script src="../../static/first/assets/scripts/klorofil-common.js"></script>
+	<script>
+	$(function() {
+		var options;
+
+        var c01 = 0, c02 = 0, c03 = 0, c04 = 0, c05 = 0, c06 = 0, c07 = 0, c08 = 0, c09 = 0, c10 = 0;
+        var c11 = 0, c12 = 0, c13 = 0, c14 = 0, c15 = 0, c16 = 0, c17 = 0, c18 = 0, c19 = 0, c20 = 0;
+        var c21 = 0, c22 = 0, c23 = 0, c24 = 0, c25 = 0, c26 = 0, c27 = 0, c28 = 0, c29 = 0, c30 = 0;
+
+        var date = new Date();
+        var month = date.getMonth()+1;
+        var day = date.getDate();
+        var daym1 = day-1;
+        var monthm1 = month;
+        if(daym1<=0){
+            daym1 = 30+daym1;
+            monthm1 = monthm1-1;
+        }
+        var daym2 = day-2;
+        var monthm2 = month;
+        if(daym2<=0){
+            daym2 = 30+daym2;
+            monthm2 = monthm2-1;
+        }
+        var daym3 = day-3;
+        var monthm3 = month;
+        if(daym3<=0){
+            daym3 = 30+daym3;
+            monthm3 = monthm3-1;
+        }
+        var daym4 = day-4;
+        var monthm4 = month;
+        if(daym4<=0){
+            daym4 = 30+daym4;
+            monthm4 = monthm4-1;
+        }
+        var daym5 = day-5;
+        var monthm5 = month;
+        if(daym5<=0){
+            daym5 = 30+daym5;
+            monthm5 = monthm5-1;
+        }
+        var daym6 = day-6;
+        var monthm6 = month;
+        if(daym6<=0){
+            daym6 = 30+daym6;
+            monthm6 = monthm6-1;
+        }
+        var daym7 = day-7;
+        var monthm7 = month;
+        if(daym7<=0){
+            daym7 = 30+daym7;
+            monthm7 = monthm7-1;
+        }
+        var daym8 = day-8;
+        var monthm8 = month;
+        if(daym8<=0){
+            daym8 = 30+daym8;
+            monthm8 = monthm8-1;
+        }
+        var daym9 = day-9;
+        var monthm9 = month;
+        if(daym9<=0){
+            daym9 = 30+daym9;
+            monthm9 = monthm9-1;
+        }
+        var daym10 = day-10;
+        var monthm10 = month;
+        if(daym10<=0){
+            daym10 = 30+daym10;
+            monthm10 = monthm10-1;
+        }
+        var daym11 = day-11;
+        var monthm11 = month;
+        if(daym11<=0){
+            daym11 = 30+daym11;
+            monthm11 = monthm11-1;
+        }
+        var daym12 = day-12;
+        var monthm12 = month;
+        if(daym12<=0){
+            daym12 = 30+daym12;
+            monthm12 = monthm12-1;
+        }
+        var daym13 = day-13;
+        var monthm13 = month;
+        if(daym13<=0){
+            daym13 = 30+daym13;
+            monthm13 = monthm13-1;
+        }
+        var daym14 = day-14;
+        var monthm14 = month;
+        if(daym14<=0){
+            daym14 = 30+daym14;
+            monthm14 = monthm14-1;
+        }
+        var daym15 = day-15;
+        var monthm15 = month;
+        if(daym15<=0){
+            daym15 = 30+daym15;
+            monthm15 = monthm15-1;
+        }
+        var daym16 = day-16;
+        var monthm16 = month;
+        if(daym16<=0){
+            daym16 = 30+daym16;
+            monthm16 = monthm16-1;
+        }
+        var daym17 = day-17;
+        var monthm17 = month;
+        if(daym17<=0){
+            daym17 = 30+daym17;
+            monthm17 = monthm17-1;
+        }
+        var daym18 = day-18;
+        var monthm18 = month;
+        if(daym18<=0){
+            daym18 = 30+daym18;
+            monthm18 = monthm18-1;
+        }
+        var daym19 = day-19;
+        var monthm19 = month;
+        if(daym19<=0){
+            daym19 = 30+daym19;
+            monthm19 = monthm19-1;
+        }
+        var daym20 = day-20;
+        var monthm20 = month;
+        if(daym20<=0){
+            daym20 = 30+daym20;
+            monthm20 = monthm20-1;
+        }
+        var daym21 = day-21;
+        var monthm21 = month;
+        if(daym21<=0){
+            daym21 = 30+daym21;
+            monthm21 = monthm21-1;
+        }
+        var daym22 = day-22;
+        var monthm22 = month;
+        if(daym22<=0){
+            daym22 = 30+daym22;
+            monthm22 = monthm22-1;
+        }
+        var daym23 = day-23;
+        var monthm23 = month;
+        if(daym23<=0){
+            daym23 = 30+daym23;
+            monthm23 = monthm23-1;
+        }
+        var daym24 = day-24;
+        var monthm24 = month;
+        if(daym24<=0){
+            daym24 = 30+daym24;
+            monthm24 = monthm24-1;
+        }
+        var daym25 = day-25;
+        var monthm25 = month;
+        if(daym25<=0){
+            daym25 = 30+daym25;
+            monthm25 = monthm25-1;
+        }
+        var daym26 = day-26;
+        var monthm26 = month;
+        if(daym26<=0){
+            daym26 = 30+daym26;
+            monthm26 = monthm26-1;
+        }
+        var daym27 = day-27;
+        var monthm27 = month;
+        if(daym27<=0){
+            daym27 = 30+daym27;
+            monthm27 = monthm27-1;
+        }
+        var daym28 = day-28;
+        var monthm28 = month;
+        if(daym28<=0){
+            daym28 = 30+daym28;
+            monthm28 = monthm28-1;
+        }
+        var daym29 = day-29;
+        var monthm29 = month;
+        if(daym29<=0){
+            daym29 = 30+daym29;
+            monthm29 = monthm29-1;
+        }
+        var today = month + '/' + day;
+        var todaym1 = monthm1 + '/' + daym1;
+        var todaym2 = monthm2 + '/' + daym2;
+        var todaym3 = monthm3 + '/' + daym3;
+        var todaym4 = monthm4 + '/' + daym4;
+        var todaym5 = monthm5 + '/' + daym5;
+        var todaym6 = monthm6 + '/' + daym6;
+        var todaym7 = monthm7 + '/' + daym7;
+        var todaym8 = monthm8 + '/' + daym8;
+        var todaym9 = monthm9 + '/' + daym9;
+        var todaym10 = monthm10 + '/' + daym10;
+        var todaym11 = monthm11 + '/' + daym11;
+        var todaym12 = monthm12 + '/' + daym12;
+        var todaym13 = monthm13 + '/' + daym13;
+        var todaym14 = monthm14 + '/' + daym14;
+        var todaym15 = monthm15 + '/' + daym15;
+        var todaym16 = monthm16 + '/' + daym16;
+        var todaym17 = monthm17 + '/' + daym17;
+        var todaym18 = monthm18 + '/' + daym18;
+        var todaym19 = monthm19 + '/' + daym19;
+        var todaym20 = monthm20 + '/' + daym20;
+        var todaym21 = monthm21 + '/' + daym21;
+        var todaym22 = monthm22 + '/' + daym22;
+        var todaym23 = monthm23 + '/' + daym23;
+        var todaym24 = monthm24 + '/' + daym24;
+        var todaym25 = monthm25 + '/' + daym25;
+        var todaym26 = monthm26 + '/' + daym26;
+        var todaym27 = monthm27 + '/' + daym27;
+        var todaym28 = monthm28 + '/' + daym28;
+        var todaym29 = monthm29 + '/' + daym29;
+
+        {% for static01 in static01s %}
+            c01 += {{ static01.e87confirm }};
+            c01 += {{ static01.s41confirm }};
+            c01 += {{ static01.s20confirm }};
+            c01 += {{ static01.n14confirm }};
+        {% endfor %}
+        {% for static02 in static02s %}
+            c02 += {{ static02.e87confirm }};
+            c02 += {{ static02.s41confirm }};
+            c02 += {{ static02.s20confirm }};
+            c02 += {{ static02.n14confirm }};
+        {% endfor %}
+        {% for static03 in static03s %}
+            c03 += {{ static03.e87confirm }};
+            c03 += {{ static03.s41confirm }};
+            c03 += {{ static03.s20confirm }};
+            c03 += {{ static03.n14confirm }};
+        {% endfor %}
+        {% for static04 in static04s %}
+            c04 += {{ static04.e87confirm }};
+            c04 += {{ static04.s41confirm }};
+            c04 += {{ static04.s20confirm }};
+            c04 += {{ static04.n14confirm }};
+        {% endfor %}
+        {% for static05 in static05s %}
+            c05 += {{ static05.e87confirm }};
+            c05 += {{ static05.s41confirm }};
+            c05 += {{ static05.s20confirm }};
+            c05 += {{ static05.n14confirm }};
+        {% endfor %}
+        {% for static06 in static06s %}
+            c06 += {{ static06.e87confirm }};
+            c06 += {{ static06.s41confirm }};
+            c06 += {{ static06.s20confirm }};
+            c06 += {{ static06.n14confirm }};
+        {% endfor %}
+        {% for static07 in static07s %}
+            c07 += {{ static07.e87confirm }};
+            c07 += {{ static07.s41confirm }};
+            c07 += {{ static07.s20confirm }};
+            c07 += {{ static07.n14confirm }};
+        {% endfor %}
+        {% for static08 in static08s %}
+            c08 += {{ static08.e87confirm }};
+            c08 += {{ static08.s41confirm }};
+            c08 += {{ static08.s20confirm }};
+            c08 += {{ static08.n14confirm }};
+        {% endfor %}
+        {% for static09 in static09s %}
+            c09 += {{ static09.e87confirm }};
+            c09 += {{ static09.s41confirm }};
+            c09 += {{ static09.s20confirm }};
+            c09 += {{ static09.n14confirm }};
+        {% endfor %}
+        {% for static10 in static10s %}
+            c10 += {{ static10.e87confirm }};
+            c10 += {{ static10.s41confirm }};
+            c10 += {{ static10.s20confirm }};
+            c10 += {{ static10.n14confirm }};
+        {% endfor %}
+        {% for static11 in static11s %}
+            c11 += {{ static11.e87confirm }};
+            c11 += {{ static11.s41confirm }};
+            c11 += {{ static11.s20confirm }};
+            c11 += {{ static11.n14confirm }};
+        {% endfor %}
+        {% for static12 in static12s %}
+            c12 += {{ static12.e87confirm }};
+            c12 += {{ static12.s41confirm }};
+            c12 += {{ static12.s20confirm }};
+            c12 += {{ static12.n14confirm }};
+        {% endfor %}
+        {% for static13 in static13s %}
+            c13 += {{ static13.e87confirm }};
+            c13 += {{ static13.s41confirm }};
+            c13 += {{ static13.s20confirm }};
+            c13 += {{ static13.n14confirm }};
+        {% endfor %}
+        {% for static14 in static14s %}
+            c14 += {{ static14.e87confirm }};
+            c14 += {{ static14.s41confirm }};
+            c14 += {{ static14.s20confirm }};
+            c14 += {{ static14.n14confirm }};
+        {% endfor %}
+        {% for static15 in static15s %}
+            c15 += {{ static15.e87confirm }};
+            c15 += {{ static15.s41confirm }};
+            c15 += {{ static15.s20confirm }};
+            c15 += {{ static15.n14confirm }};
+        {% endfor %}
+        {% for static16 in static16s %}
+            c16 += {{ static16.e87confirm }};
+            c16 += {{ static16.s41confirm }};
+            c16 += {{ static16.s20confirm }};
+            c16 += {{ static16.n14confirm }};
+        {% endfor %}
+        {% for static17 in static17s %}
+            c17 += {{ static17.e87confirm }};
+            c17 += {{ static17.s41confirm }};
+            c17 += {{ static17.s20confirm }};
+            c17 += {{ static17.n14confirm }};
+        {% endfor %}
+        {% for static18 in static18s %}
+            c18 += {{ static18.e87confirm }};
+            c18 += {{ static18.s41confirm }};
+            c18 += {{ static18.s20confirm }};
+            c18 += {{ static18.n14confirm }};
+        {% endfor %}
+        {% for static19 in static19s %}
+            c19 += {{ static19.e87confirm }};
+            c19 += {{ static19.s41confirm }};
+            c19 += {{ static19.s20confirm }};
+            c19 += {{ static19.n14confirm }};
+        {% endfor %}
+        {% for static20 in static20s %}
+            c20 += {{ static20.e87confirm }};
+            c20 += {{ static20.s41confirm }};
+            c20 += {{ static20.s20confirm }};
+            c20 += {{ static20.n14confirm }};
+        {% endfor %}
+        {% for static21 in static21s %}
+            c21 += {{ static21.e87confirm }};
+            c21 += {{ static21.s41confirm }};
+            c21 += {{ static21.s20confirm }};
+            c21 += {{ static21.n14confirm }};
+        {% endfor %}
+        {% for static22 in static22s %}
+            c22 += {{ static22.e87confirm }};
+            c22 += {{ static22.s41confirm }};
+            c22 += {{ static22.s20confirm }};
+            c22 += {{ static22.n14confirm }};
+        {% endfor %}
+        {% for static23 in static23s %}
+            c23 += {{ static23.e87confirm }};
+            c23 += {{ static23.s41confirm }};
+            c23 += {{ static23.s20confirm }};
+            c23 += {{ static23.n14confirm }};
+        {% endfor %}
+        {% for static24 in static24s %}
+            c24 += {{ static24.e87confirm }};
+            c24 += {{ static24.s41confirm }};
+            c24 += {{ static24.s20confirm }};
+            c24 += {{ static24.n14confirm }};
+        {% endfor %}
+        {% for static25 in static25s %}
+            c25 += {{ static25.e87confirm }};
+            c25 += {{ static25.s41confirm }};
+            c25 += {{ static25.s20confirm }};
+            c25 += {{ static25.n14confirm }};
+        {% endfor %}
+        {% for static26 in static26s %}
+            c26 += {{ static26.e87confirm }};
+            c26 += {{ static26.s41confirm }};
+            c26 += {{ static26.s20confirm }};
+            c26 += {{ static26.n14confirm }};
+        {% endfor %}
+        {% for static27 in static27s %}
+            c27 += {{ static27.e87confirm }};
+            c27 += {{ static27.s41confirm }};
+            c27 += {{ static27.s20confirm }};
+            c27 += {{ static27.n14confirm }};
+        {% endfor %}
+        {% for static28 in static28s %}
+            c28 += {{ static28.e87confirm }};
+            c28 += {{ static28.s41confirm }};
+            c28 += {{ static28.s20confirm }};
+            c28 += {{ static28.n14confirm }};
+        {% endfor %}
+        {% for static29 in static29s %}
+            c29 += {{ static29.e87confirm }};
+            c29 += {{ static29.s41confirm }};
+            c29 += {{ static29.s20confirm }};
+            c29 += {{ static29.n14confirm }};
+        {% endfor %}
+        {% for static30 in static30s %}
+            c30 += {{ static30.e87confirm }};
+            c30 += {{ static30.s41confirm }};
+            c30 += {{ static30.s20confirm }};
+            c30 += {{ static30.n14confirm }};
+        {% endfor %}
+
+		var data = {
+			labels: [todaym29, todaym28, todaym27, todaym26, todaym25, todaym24, todaym23, todaym22, todaym21, todaym20, todaym19, todaym18,
+                todaym17, todaym16, todaym15,todaym14, todaym13, todaym12, todaym11, todaym10, todaym9, todaym8, todaym7,
+                todaym6, todaym5, todaym4, todaym3, todaym2, todaym1, today],
+			series: [
+				[c01, c02, c03, c04, c05, c06, c07, c08, c09, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20,
+                 c21, c22, c23, c24, c25, c26, c27, c28, c29, c30],
+			]
+		};
+
+		// line chart
+		options = {
+			height: "300px",
+			showPoint: true,
+			axisX: {
+				showGrid: false
+			},
+			lineSmooth: false,
+		};
+
+		new Chartist.Line('#demo-line-chart', data, options);
+
+        var options;
+
+        var e01 = 0, e02 = 0, e03 = 0, e04 = 0, e05 = 0, e06 = 0, e07 = 0, e08 = 0, e09 = 0, e10 = 0;
+        var e11 = 0, e12 = 0, e13 = 0, e14 = 0, e15 = 0, e16 = 0, e17 = 0, e18 = 0, e19 = 0, e20 = 0;
+        var e21 = 0, e22 = 0, e23 = 0, e24 = 0, e25 = 0, e26 = 0, e27 = 0, e28 = 0, e29 = 0, e30 = 0;
+
+        {% for static01 in static01s %}
+            e01 += {{ static01.e87enter }};
+            e01 += {{ static01.s41enter }};
+            e01 += {{ static01.s20enter }};
+            e01 += {{ static01.n14enter }};
+        {% endfor %}
+        {% for static02 in static02s %}
+            e02 += {{ static02.e87enter }};
+            e02 += {{ static02.s41enter }};
+            e02 += {{ static02.s20enter }};
+            e02 += {{ static02.n14enter }};
+        {% endfor %}
+        {% for static03 in static03s %}
+            e03 += {{ static03.e87enter }};
+            e03 += {{ static03.s41enter }};
+            e03 += {{ static03.s20enter }};
+            e03 += {{ static03.n14enter }};
+        {% endfor %}
+        {% for static04 in static04s %}
+            e04 += {{ static04.e87enter }};
+            e04 += {{ static04.s41enter }};
+            e04 += {{ static04.s20enter }};
+            e04 += {{ static04.n14enter }};
+        {% endfor %}
+        {% for static05 in static05s %}
+            e05 += {{ static05.e87enter }};
+            e05 += {{ static05.s41enter }};
+            e05 += {{ static05.s20enter }};
+            e05 += {{ static05.n14enter }};
+        {% endfor %}
+        {% for static06 in static06s %}
+            e06 += {{ static06.e87enter }};
+            e06 += {{ static06.s41enter }};
+            e06 += {{ static06.s20enter }};
+            e06 += {{ static06.n14enter }};
+        {% endfor %}
+        {% for static07 in static07s %}
+            e07 += {{ static07.e87enter }};
+            e07 += {{ static07.s41enter }};
+            e07 += {{ static07.s20enter }};
+            e07 += {{ static07.n14enter }};
+        {% endfor %}
+        {% for static08 in static08s %}
+            e08 += {{ static08.e87enter }};
+            e08 += {{ static08.s41enter }};
+            e08 += {{ static08.s20enter }};
+            e08 += {{ static08.n14enter }};
+        {% endfor %}
+        {% for static09 in static09s %}
+            e09 += {{ static09.e87enter }};
+            e09 += {{ static09.s41enter }};
+            e09 += {{ static09.s20enter }};
+            e09 += {{ static09.n14enter }};
+        {% endfor %}
+        {% for static10 in static10s %}
+            e10 += {{ static10.e87enter }};
+            e10 += {{ static10.s41enter }};
+            e10 += {{ static10.s20enter }};
+            e10 += {{ static10.n14enter }};
+        {% endfor %}
+        {% for static11 in static11s %}
+            e11 += {{ static11.e87enter }};
+            e11 += {{ static11.s41enter }};
+            e11 += {{ static11.s20enter }};
+            e11 += {{ static11.n14enter }};
+        {% endfor %}
+        {% for static12 in static12s %}
+            e12 += {{ static12.e87enter }};
+            e12 += {{ static12.s41enter }};
+            e12 += {{ static12.s20enter }};
+            e12 += {{ static12.n14enter }};
+        {% endfor %}
+        {% for static13 in static13s %}
+            e13 += {{ static13.e87enter }};
+            e13 += {{ static13.s41enter }};
+            e13 += {{ static13.s20enter }};
+            e13 += {{ static13.n14enter }};
+        {% endfor %}
+        {% for static14 in static14s %}
+            e14 += {{ static14.e87enter }};
+            e14 += {{ static14.s41enter }};
+            e14 += {{ static14.s20enter }};
+            e14 += {{ static14.n14enter }};
+        {% endfor %}
+        {% for static15 in static15s %}
+            e15 += {{ static15.e87enter }};
+            e15 += {{ static15.s41enter }};
+            e15 += {{ static15.s20enter }};
+            e15 += {{ static15.n14enter }};
+        {% endfor %}
+        {% for static16 in static16s %}
+            e16 += {{ static16.e87enter }};
+            e16 += {{ static16.s41enter }};
+            e16 += {{ static16.s20enter }};
+            e16 += {{ static16.n14enter }};
+        {% endfor %}
+        {% for static17 in static17s %}
+            e17 += {{ static17.e87enter }};
+            e17 += {{ static17.s41enter }};
+            e17 += {{ static17.s20enter }};
+            e17 += {{ static17.n14enter }};
+        {% endfor %}
+        {% for static18 in static18s %}
+            e18 += {{ static18.e87enter }};
+            e18 += {{ static18.s41enter }};
+            e18 += {{ static18.s20enter }};
+            e18 += {{ static18.n14enter }};
+        {% endfor %}
+        {% for static19 in static19s %}
+            e19 += {{ static19.e87enter}};
+            e19 += {{ static19.s41enter }};
+            e19 += {{ static19.s20enter }};
+            e19 += {{ static19.n14enter }};
+        {% endfor %}
+        {% for static20 in static20s %}
+            e20 += {{ static20.e87enter }};
+            e20 += {{ static20.s41enter }};
+            e20 += {{ static20.s20enter }};
+            e20 += {{ static20.n14enter }};
+        {% endfor %}
+        {% for static21 in static21s %}
+            e21 += {{ static21.e87enter }};
+            e21 += {{ static21.s41enter }};
+            e21 += {{ static21.s20enter }};
+            e21 += {{ static21.n14enter }};
+        {% endfor %}
+        {% for static22 in static22s %}
+            e22 += {{ static22.e87enter }};
+            e22 += {{ static22.s41enter }};
+            e22 += {{ static22.s20enter }};
+            e22 += {{ static22.n14enter }};
+        {% endfor %}
+        {% for static23 in static23s %}
+            e23 += {{ static23.e87enter }};
+            e23 += {{ static23.s41enter }};
+            e23 += {{ static23.s20enter }};
+            e23 += {{ static23.n14enter }};
+        {% endfor %}
+        {% for static24 in static24s %}
+            e24 += {{ static24.e87enter }};
+            e24 += {{ static24.s41enter }};
+            e24 += {{ static24.s20enter }};
+            e24 += {{ static24.n14enter }};
+        {% endfor %}
+        {% for static25 in static25s %}
+            e25 += {{ static25.e87enter }};
+            e25 += {{ static25.s41enter }};
+            e25 += {{ static25.s20enter }};
+            e25 += {{ static25.n14enter }};
+        {% endfor %}
+        {% for static26 in static26s %}
+            e26 += {{ static26.e87enter }};
+            e26 += {{ static26.s41enter }};
+            e26 += {{ static26.s20enter }};
+            e26 += {{ static26.n14enter }};
+        {% endfor %}
+        {% for static27 in static27s %}
+            e27 += {{ static27.e87enter }};
+            e27 += {{ static27.s41enter }};
+            e27 += {{ static27.s20enter }};
+            e27 += {{ static27.n14enter }};
+        {% endfor %}
+        {% for static28 in static28s %}
+            e28 += {{ static28.e87enter }};
+            e28 += {{ static28.s41enter }};
+            e28 += {{ static28.s20enter }};
+            e28 += {{ static28.n14enter }};
+        {% endfor %}
+        {% for static29 in static29s %}
+            e29 += {{ static29.e87enter }};
+            e29 += {{ static29.s41enter }};
+            e29 += {{ static29.s20enter }};
+            e29 += {{ static29.n14enter }};
+        {% endfor %}
+        {% for static30 in static30s %}
+            e30 += {{ static30.e87enter }};
+            e30 += {{ static30.s41enter }};
+            e30 += {{ static30.s20enter }};
+            e30 += {{ static30.n14enter }};
+        {% endfor %}
+
+
+		var data = {
+			labels: [todaym29, todaym28, todaym27, todaym26, todaym25, todaym24, todaym23, todaym22, todaym21, todaym20, todaym19, todaym18,
+                todaym17, todaym16, todaym15,todaym14, todaym13, todaym12, todaym11, todaym10, todaym9, todaym8, todaym7,
+                todaym6, todaym5, todaym4, todaym3, todaym2, todaym1, today],
+			series: [
+				[e01, e02, e03, e04, e05, e06, e07, e08, e09, e10, e11, e12, e13, e14, e15, e16, e17, e18, e19, e20,
+                 e21, e22, e23, e24, e25, e26, e27, e28, e29, e30],
+			]
+		};
+		// area chart
+		options = {
+			height: "270px",
+			showArea: true,
+			showLine: false,
+			showPoint: false,
+			axisX: {
+				showGrid: false
+			},
+			lineSmooth: false,
+		};
+
+		new Chartist.Line('#demo-area-chart', data, options);
+
+		var v1 = 0, v2 = 0, v3 = 0, v4 = 0;
+		{% for static in staticss %}
+            v1 += {{ static.e87enter }};
+            v2 += {{ static.s41enter }};
+            v3 += {{ static.s20enter }};
+            v4 += {{ static.n14enter }};
+        {% endfor %}
+		// bar chart
+		var data = {
+			labels: ['e8-7', 's4-1', 's2-0', 'N14', 'e3-1', 'e2', 'e3'],
+			series: [
+				[v1, v2, v3, v4, 400, 420, 380]
+			]
+		};
+
+		var options = {
+			height: 300,
+			axisX: {
+				showGrid: false
+			},
+		};
+
+		new Chartist.Bar('#demo-bar-chart', data, options);
+
+        var vc1 = 0, vc2 = 0, vc3 = 0, vc4 = 0;
+		{% for static in staticss %}
+            vc1 += {{ static.e87confirm }};
+            vc2 += {{ static.s41confirm }};
+            vc3 += {{ static.s20confirm }};
+            vc4 += {{ static.n14confirm }};
+        {% endfor %}
+		// bar chart
+		var data = {
+            labels: ['e8-7', 's4-1', 's2-0', 'N14', 'e3-1', 'e2', 'e3'],
+            series: [
+                [vc1, vc2, vc3, vc4, 100, 120, 80]
+            ]
+        };
+
+		var options = {
+			height: 300,
+			axisX: {
+				showGrid: false
+			},
+		};
+
+		new Chartist.Bar('#bar-chart', data, options);
+
+
+		// multiple chart
+		var data = {
+			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			series: [{
+				name: 'series-real',
+				data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
+			}, {
+				name: 'series-projection',
+				data: [240, 350, 360, 380, 400, 450, 480, 523, 555, 600, 700, 800],
+			}]
+		};
+
+		var options = {
+			fullWidth: true,
+			lineSmooth: false,
+			height: "270px",
+			low: 0,
+			high: 'auto',
+			series: {
+				'series-projection': {
+					showArea: true,
+					showPoint: false,
+					showLine: false
+				},
+			},
+			axisX: {
+				showGrid: false,
+
+			},
+			axisY: {
+				showGrid: false,
+				onlyInteger: true,
+				offset: 0,
+			},
+			chartPadding: {
+				left: 20,
+				right: 20
+			}
+		};
+
+		new Chartist.Line('#multiple-chart', data, options);
+
+	});
+	</script>
+</body>
+
+</html>

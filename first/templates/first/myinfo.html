@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>출입명부 키오스크</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="../../static/first/assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../static/first/assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../../static/first/assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="../../static/first/assets/vendor/chartist/css/chartist-custom.css">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" href="../../static/first/assets/css/main.css">
+	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+	<link rel="stylesheet" href="../../static/first/assets/css/demo.css">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="apple-touch-icon" sizes="76x76" href="../../static/first/assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="../../static/first/assets/img/favicon.jpg">
+</head>
+
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+		<!-- NAVBAR -->
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="brand">
+				<a href="index.html"><img src="../../static/first/assets/img/logo-dark.jpg" alt="Klorofil Logo" class="img-responsive logo"></a>
+			</div>
+			<div class="container-fluid">
+				<div class="navbar-btn">
+					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+				</div>
+				<div id="navbar-menu">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+								<i class="lnr lnr-alarm"></i>
+								<span class="badge bg-danger">5</span>
+							</a>
+							<ul class="dropdown-menu notifications">
+								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
+								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
+								<li><a href="#" class="more">See all notifications</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Basic Use</a></li>
+								<li><a href="#">Working With Data</a></li>
+								<li><a href="#">Security</a></li>
+								<li><a href="#">Troubleshooting</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="../../static/first/assets/img/user.jpg" class="img-circle" alt="Avatar"> <span>Kim Jung Bin</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+							</ul>
+						</li>
+						<!-- <li>
+							<a class="update-pro" href="https://www.themeineed.com/downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- END NAVBAR -->
+		<!-- LEFT SIDEBAR -->
+		<div id="sidebar-nav" class="sidebar">
+			<div class="sidebar-scroll">
+				<nav>
+					<ul class="nav">
+						<li><a href="{% url 'myinfo' %}" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+						<li><a href="{% url 'charts' %}" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li>
+						<li><a href="{% url 'page_profile' %}" class=""><i class="lnr lnr-file-empty"></i> <span>Profile</span></a></li>
+						<li><a href="{% url 'login' %}" class=""><i class="lnr lnr-file-empty"></i> <span>Login</span></a></li>
+						<li><a href="{% url 'tables' %}" class=""><i class="lnr lnr-dice"></i> <span>Tables</span></a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<!-- END LEFT SIDEBAR -->
+		<!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					<!-- OVERVIEW -->
+					<div class="panel panel-headline">
+						<div class="panel-heading">
+                            <h3 class="panel-title">Weekly Overview</h3>
+							<p id="period1" class="panel-subtitle">Period: 2020-11-16 ~ 2020-12-15</p>
+                            <script>
+                                var date = new Date();
+                                var month = date.getMonth()+1;
+                                var day = date.getDate();
+                                var year = date.getFullYear();
+                                var monthm1 = month;
+                                var daym1 = day-30;
+                                var yearm1 = year;
+                                if(daym1<=0){
+                                    daym1 = 30+daym1;
+                                    monthm1 = monthm1-1;
+                                }
+                                document.getElementById('period1').innerHTML = 'Period: ' + yearm1 + '-' + monthm1 + '-' + daym1 + ' ~ ' + year + '-' + month + '-' + day
+                            </script>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="metric">
+										<span class="icon"><i class="fa fa-download"></i></span>
+										<p>
+                                            <span id="weaksss" class="number">1252</span>
+                                            <script>
+                                            var total;
+                                            var e87e = 0;
+                                            var s41e = 0;
+                                            var s20e = 0;
+                                            var n14e = 0;
+                                            {% for static in staticss %}
+                                                e87e += {{ static.e87enter }};
+                                                s41e += {{ static.s41enter }};
+                                                s20e += {{ static.s20enter }};
+                                                n14e += {{ static.n14enter }};
+                                            {% endfor %}
+                                            total = parseInt(e87e) + parseInt(s41e)+ parseInt(s20e)+ parseInt(n14e);
+                                            document.getElementById('weaksss').innerHTML = total
+                                            </script>
+											<span class="title">Total Visitors</span>
+										</p>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="metric">
+										<span class="icon"><i class="fa fa-shopping-bag"></i></span>
+										<p>
+											<span id="suspectss" class="number">203</span>
+                                            <script>
+                                            var total;
+                                            var e87s = 100;
+                                            var s41s = 100;
+                                            var s20s = 100;
+                                            var n14s = 100;
+                                            {% for static in staticss %}
+                                                e87s += {{ static.e87confirm }};
+                                                s41s += {{ static.s41confirm }};
+                                                s20s += {{ static.s20confirm }};
+                                                n14s += {{ static.n14confirm }};
+                                            {% endfor %}
+                                            total = parseInt(e87s) + parseInt(s41s)+ parseInt(s20s)+ parseInt(n14s);
+                                            document.getElementById('suspectss').innerHTML = total
+                                            </script>
+											<span class="title">Corona Suspect</span>
+										</p>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="metric">
+										<span class="icon"><i class="fa fa-eye"></i></span>
+										<p>
+											<span id="confirmss" class="number">14</span>
+                                            <script>
+                                            var total;
+                                            var e87c = 0;
+                                            var s41c = 0;
+                                            var s20c = 0;
+                                            var n14c = 0;
+                                            {% for static in staticss %}
+                                                e87c += {{ static.e87confirm }};
+                                                s41c += {{ static.s41confirm }};
+                                                s20c += {{ static.s20confirm }};
+                                                n14c += {{ static.n14confirm }};
+                                            {% endfor %}
+                                            total = parseInt(e87c) + parseInt(s41c)+ parseInt(s20c)+ parseInt(n14c);
+                                            document.getElementById('confirmss').innerHTML = total
+                                            </script>
+											<span class="title">Confirmed Case</span>
+										</p>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="metric">
+										<span class="icon"><i class="fa fa-bar-chart"></i></span>
+										<p>
+											<span id="ratioss" class="number">35%</span>
+                                            <script>
+                                            var etotal, stotal, ratio;
+                                            var e87e = 0;
+                                            var s41e = 0;
+                                            var s20e = 0;
+                                            var n14e = 0;
+                                            var e87s = 100;
+                                            var s41s = 100;
+                                            var s20s = 100;
+                                            var n14s = 100;
+                                            {% for static in staticss %}
+                                                e87e += {{ static.e87enter }};
+                                                s41e += {{ static.s41enter }};
+                                                s20e += {{ static.s20enter }};
+                                                n14e += {{ static.n14enter }};
+                                                e87s += {{ static.e87confirm }};
+                                                s41s += {{ static.s41confirm }};
+                                                s20s += {{ static.s20confirm }};
+                                                n14s += {{ static.n14confirm }};
+                                            {% endfor %}
+                                            etotal = parseInt(e87e) + parseInt(s41e)+ parseInt(s20e)+ parseInt(n14e);
+                                            stotal = parseInt(e87s) + parseInt(s41s)+ parseInt(s20s)+ parseInt(n14s);
+                                            ratio = parseInt(stotal) / parseInt(etotal) * 100;
+                                            document.getElementById('ratioss').innerHTML = ratio.toFixed(2) + '%'
+                                            </script>
+											<span class="title">Suspect Ratio</span>
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-9">
+									<div id="headline-chart" class="ct-chart"></div>
+								</div>
+								<div class="col-md-3">
+									<div class="weekly-summary text-right">
+										<span id="weaksss1" class="number">8,400</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 10%</span>
+                                        <script>
+                                            var total;
+                                            var e87e = 0;
+                                            var s41e = 0;
+                                            var s20e = 0;
+                                            var n14e = 0;
+                                            {% for static in staticss %}
+                                                e87e += {{ static.e87enter }};
+                                                s41e += {{ static.s41enter }};
+                                                s20e += {{ static.s20enter }};
+                                                n14e += {{ static.n14enter }};
+                                            {% endfor %}
+                                            total = parseInt(e87e) + parseInt(s41e)+ parseInt(s20e)+ parseInt(n14e);
+                                            document.getElementById('weaksss1').innerHTML = total/10
+                                            </script>
+										<span class="info-label">Total Visitors</span>
+									</div>
+									<div class="weekly-summary text-right">
+										<span id="suspectss1" class="number">700</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 25%</span>
+                                        <script>
+                                            var total;
+                                            var e87s = 100;
+                                            var s41s = 100;
+                                            var s20s = 100;
+                                            var n14s = 100;
+                                            {% for static in staticss %}
+                                                e87s += {{ static.e87confirm }};
+                                                s41s += {{ static.s41confirm }};
+                                                s20s += {{ static.s20confirm }};
+                                                n14s += {{ static.n14confirm }};
+                                            {% endfor %}
+                                            total = parseInt(e87s) + parseInt(s41s)+ parseInt(s20s)+ parseInt(n14s);
+                                            document.getElementById('suspectss1').innerHTML = total/4
+                                            </script>
+										<span class="info-label">Corona Suspect</span>
+									</div>
+									<div class="weekly-summary text-right">
+										<span id="confirmss1" class="number">210</span> <span class="percentage"><i class="fa fa-caret-down text-danger"></i> 20%</span>
+                                        <script>
+                                            var total;
+                                            var e87c = 0;
+                                            var s41c = 0;
+                                            var s20c = 0;
+                                            var n14c = 0;
+                                            {% for static in staticss %}
+                                                e87c += {{ static.e87confirm }};
+                                                s41c += {{ static.s41confirm }};
+                                                s20c += {{ static.s20confirm }};
+                                                n14c += {{ static.n14confirm }};
+                                            {% endfor %}
+                                            total = parseInt(e87c) + parseInt(s41c)+ parseInt(s20c)+ parseInt(n14c);
+                                            document.getElementById('confirmss1').innerHTML = total/5
+                                            </script>
+										<span class="info-label">Confirmed Case</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END OVERVIEW -->
+					<div class="row">
+						<div class="col-md-6">
+							<!-- RECENT PURCHASES -->
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Daily Access List</h3>
+									<div class="right">
+										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+									</div>
+								</div>
+								<div class="panel-body no-padding">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+                                    <th>AccessCode</th>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Data & Time</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 {% for daily in times %}
+                                 <tr>
+                                    <td>{{ daily.accesscode }}</td>
+                                    <td>{{ daily.id.name }}</td>
+                                    <td>{{ daily.id.id }}</td>
+                                    <td>{{ daily.timedata }}</td>
+                                 </tr>
+                              {% endfor %}
+										</tbody>
+									</table>
+								</div>
+								<div class="panel-footer">
+									<div class="row">
+										<div class="col-md-6"><span class="panel-note"><i class="fa fa-clock-o"></i> Last 3 months</span></div>
+										<div class="col-md-6 text-right"><a href="#" class="btn btn-primary">View All Access</a></div>
+									</div>
+								</div>
+							</div>
+							<!-- END RECENT PURCHASES -->
+						</div>
+						<div class="col-md-6">
+							<!-- TIMELINE -->
+							<div class="panel panel-scrolling">
+								<div class="panel-heading">
+									<h3 class="panel-title">Recent User Activity</h3>
+                                    <h5>(0: None, 1: Exist)</h5>
+									<div class="right">
+										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+									</div>
+								</div>
+								<div class="panel-body">
+									<ul class="list-unstyled activity-list">
+										{% for person in states %}
+                              <li>
+                                 <img src="../../static/first/assets/img/user1.jpg" alt="Avatar" class="img-circle pull-left avatar">
+                                 <p><a id="user1124" href="#">{{ person.id.name }}</a> temperature is {{ person.temperature}}, Abnormaltemperature is {{ person.abnormaltemperature }}, and has breathingSymptom {{ person.breathingsymptoms }}, confirm : {{ person.confirm }}, suspect : {{ person.suspect }}.<span class="timestamp">{{ person.datetimedata }}</span></p>
+                              </li>
+                           {% endfor %}
+									</ul>
+									<button type="button" class="btn btn-primary btn-bottom center-block">Load More</button>
+								</div>
+							</div>
+							<!-- END TIMELINE -->
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<!-- TASKS -->
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Administrator Tasks</h3>
+									<div class="right">
+										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+									</div>
+								</div>
+								<div class="panel-body">
+									<ul class="list-unstyled task-list">
+										<li>
+											<p>Updating Users Activitys <span class="label-percent">23%</span></p>
+											<div class="progress progress-xs">
+												<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="23" aria-valuemin="0" aria-valuemax="100" style="width:23%">
+													<span class="sr-only">23% Complete</span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<p>Call to Inspectors <span class="label-percent">80%</span></p>
+											<div class="progress progress-xs">
+												<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+													<span class="sr-only">80% Complete</span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<p>Data Duplication Check <span class="label-percent">100%</span></p>
+											<div class="progress progress-xs">
+												<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+													<span class="sr-only">Success</span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<p>Server Check <span class="label-percent">45%</span></p>
+											<div class="progress progress-xs">
+												<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+													<span class="sr-only">45% Complete</span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<p>Mobile App Development <span class="label-percent">10%</span></p>
+											<div class="progress progress-xs">
+												<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%">
+													<span class="sr-only">10% Complete</span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!-- END TASKS -->
+						</div>
+						<div class="col-md-4">
+							<!-- VISIT CHART -->
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Place Visits</h3>
+									<div class="right">
+										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+									</div>
+								</div>
+								<div class="panel-body">
+									<div id="visits-chart" class="ct-chart"></div>
+								</div>
+							</div>
+							<!-- END VISIT CHART -->
+						</div>
+						<div class="col-md-4">
+							<!-- REALTIME CHART -->
+							<div class="panel">
+								<div class="panel-heading">
+									<h3 class="panel-title">Server Reliability</h3>
+									<div class="right">
+										<button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
+										<button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+									</div>
+								</div>
+								<div class="panel-body">
+									<div id="system-load" class="easy-pie-chart" data-percent="70">
+										<span class="percent">70</span>
+									</div>
+									<h4>CPU Load</h4>
+									<ul class="list-unstyled list-justify">
+										<li>High: <span>95%</span></li>
+										<li>Average: <span>87%</span></li>
+										<li>Low: <span>20%</span></li>
+										<li>Threads: <span>996</span></li>
+										<li>Processes: <span>259</span></li>
+									</ul>
+								</div>
+							</div>
+							<!-- END REALTIME CHART -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END MAIN CONTENT -->
+		</div>
+		<!-- END MAIN -->
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright"> <i class="fa fa-love"></i><a href="https://bootstrapthemes.co"> </a>
+</p>
+			</div>
+		</footer>
+	</div>
+	<!-- END WRAPPER -->
+	<!-- Javascript -->
+	<script src="../../static/first/assets/vendor/jquery/jquery.min.js"></script>
+	<script src="../../static/first/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../static/first/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../../static/first/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script src="../../static/first/assets/vendor/chartist/js/chartist.min.js"></script>
+	<script src="../../static/first/assets/scripts/klorofil-common.js"></script>
+	<script>
+	$(function() {
+		var data, options;
+        var c01 = 0, c02 = 0, c03 = 0, c04 = 0, c05 = 0, c06 = 0, c07 = 0;
+
+        var date = new Date();
+        var month = date.getMonth()+1;
+        var day = date.getDate();
+        var daym1 = day-1;
+        var monthm1 = month;
+        if(daym1<=0){
+            daym1 = 30+daym1;
+            monthm1 = monthm1-1;
+        }
+        var daym2 = day-2;
+        var monthm2 = month;
+        if(daym2<=0){
+            daym2 = 30+daym2;
+            monthm2 = monthm2-1;
+        }
+        var daym3 = day-3;
+        var monthm3 = month;
+        if(daym3<=0){
+            daym3 = 30+daym3;
+            monthm3 = monthm3-1;
+        }
+        var daym4 = day-4;
+        var monthm4 = month;
+        if(daym4<=0){
+            daym4 = 30+daym4;
+            monthm4 = monthm4-1;
+        }
+        var daym5 = day-5;
+        var monthm5 = month;
+        if(daym5<=0){
+            daym5 = 30+daym5;
+            monthm5 = monthm5-1;
+        }
+        var daym6 = day-6;
+        var monthm6 = month;
+        if(daym6<=0){
+            daym6 = 30+daym6;
+            monthm6 = monthm6-1;
+        }
+        var today = month + '/' + day;
+        var todaym1 = monthm1 + '/' + daym1;
+        var todaym2 = monthm2 + '/' + daym2;
+        var todaym3 = monthm3 + '/' + daym3;
+        var todaym4 = monthm4 + '/' + daym4;
+        var todaym5 = monthm5 + '/' + daym5;
+        var todaym6 = monthm6 + '/' + daym6;
+
+        {% for static01 in static01s %}
+            c01 += {{ static01.e87confirm }};
+            c01 += {{ static01.s41confirm }};
+            c01 += {{ static01.s20confirm }};
+            c01 += {{ static01.n14confirm }};
+        {% endfor %}
+
+        {% for static02 in static02s %}
+            c02 += {{ static02.e87confirm }};
+            c02 += {{ static02.s41confirm }};
+            c02 += {{ static02.s20confirm }};
+            c02 += {{ static02.n14confirm }};
+        {% endfor %}
+
+        {% for static03 in static03s %}
+            c03 += {{ static03.e87confirm }};
+            c03 += {{ static03.s41confirm }};
+            c03 += {{ static03.s20confirm }};
+            c03 += {{ static03.n14confirm }};
+        {% endfor %}
+
+        {% for static04 in static04s %}
+            c04 += {{ static04.e87confirm }};
+            c04 += {{ static04.s41confirm }};
+            c04 += {{ static04.s20confirm }};
+            c04 += {{ static04.n14confirm }};
+        {% endfor %}
+
+        {% for static05 in static05s %}
+            c05 += {{ static05.e87confirm }};
+            c05 += {{ static05.s41confirm }};
+            c05 += {{ static05.s20confirm }};
+            c05 += {{ static05.n14confirm }};
+        {% endfor %}
+
+        {% for static06 in static06s %}
+            c06 += {{ static06.e87confirm }};
+            c06 += {{ static06.s41confirm }};
+            c06 += {{ static06.s20confirm }};
+            c06 += {{ static06.n14confirm }};
+        {% endfor %}
+
+        {% for static07 in static07s %}
+            c07 += {{ static07.e87confirm }};
+            c07 += {{ static07.s41confirm }};
+            c07 += {{ static07.s20confirm }};
+            c07 += {{ static07.n14confirm }};
+        {% endfor %}
+
+		// headline charts
+		data = {
+			labels: [
+			    todaym6, todaym5, todaym4, todaym3, todaym2, todaym1, ''
+            ],
+			series: [
+				[c01, c02, c03, c04, c05, c06, c07],
+			]
+		};
+
+		options = {
+			height: 300,
+			showArea: true,
+			showLine: false,
+			showPoint: false,
+			fullWidth: true,
+			axisX: {
+				showGrid: false
+			},
+			lineSmooth: false,
+		};
+
+		new Chartist.Line('#headline-chart', data, options);
+
+
+		// visits trend charts
+		data = {
+			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+			series: [{
+				name: 'series-real',
+				data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
+			}, {
+				name: 'series-projection',
+				data: [240, 350, 360, 380, 400, 450, 480, 523, 555, 600, 700, 800],
+			}]
+		};
+
+		options = {
+			fullWidth: true,
+			lineSmooth: false,
+			height: "270px",
+			low: 0,
+			high: 'auto',
+			series: {
+				'series-projection': {
+					showArea: true,
+					showPoint: false,
+					showLine: false
+				},
+			},
+			axisX: {
+				showGrid: false,
+
+			},
+			axisY: {
+				showGrid: false,
+				onlyInteger: true,
+				offset: 0,
+			},
+			chartPadding: {
+				left: 20,
+				right: 20
+			}
+		};
+
+		new Chartist.Line('#visits-trends-chart', data, options);
+
+		var s1 = 0, s2 = 0, s3 = 0, s4 = 0;
+		{% for static in staticss %}
+            s1 += {{ static.e87enter }};
+            s2 += {{ static.s41enter }};
+            s3 += {{ static.s20enter }};
+            s4 += {{ static.n14enter }};
+        {% endfor %}
+
+		// visits chart
+		data = {
+			labels: ['e8-7', 's4-1', 's2-0', 'N14', 'e3-1', 'e2', 'e3'],
+			series: [
+				[s1, s2, s3, s4, 400, 420, 380]
+			]
+		};
+
+		options = {
+			height: 300,
+			axisX: {
+				showGrid: false
+			},
+		};
+
+		new Chartist.Bar('#visits-chart', data, options);
+
+
+		// real-time pie chart
+		var sysLoad = $('#system-load').easyPieChart({
+			size: 130,
+			barColor: function(percent) {
+				return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
+			},
+			trackColor: 'rgba(245, 245, 245, 0.8)',
+			scaleColor: false,
+			lineWidth: 5,
+			lineCap: "square",
+			animate: 800
+		});
+
+		var updateInterval = 3000; // in milliseconds
+
+		setInterval(function() {
+			var randomVal;
+			randomVal = getRandomInt(0, 100);
+
+			sysLoad.data('easyPieChart').update(randomVal);
+			sysLoad.find('.percent').text(randomVal);
+		}, updateInterval);
+
+		function getRandomInt(min, max) {
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+
+	});
+	</script>
+</body>
+
+</html>
